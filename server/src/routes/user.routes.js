@@ -2,11 +2,11 @@ import { ControllerUsers } from "../controllers/user.controller.js";
 
 const controller = new ControllerUsers();
 
-export async function userRoutes(fastify, options){
+export async function userRoutes(app, options){
 
-    fastify.get('/users', controller.listUsers);
-    fastify.post('/users', controller.createUser);
-    fastify.put('/users/:id', controller.updateUser);
-    fastify.delete('/users/:id', controller.deleteUser);
-    fastify.post('/app/authenticate', controller.authLogin);
+    app.get('/users', controller.listUsers);
+    app.post('/users', controller.createUser);
+    app.put('/users/:id', controller.updateUser);
+    app.delete('/users/:id', controller.deleteUser);
+    app.post('/app/authenticate', controller.authLogin);
 }

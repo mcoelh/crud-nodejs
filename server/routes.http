@@ -1,0 +1,43 @@
+POST http://localhost:3001/app/authenticate
+Content-Type: application/json
+
+{
+    "document": "41899921784",
+    "password": "teste123"
+}
+
+
+###
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+    "name": "Tony",
+    "fancyname": "Stark",
+    "email": "tony@gmail.com",
+    "document": "10987654321",
+    "phone": "7799999999",
+    "password": "tony123"
+}
+
+###
+GET http://localhost:3001/users
+
+###
+GET http://localhost:3001/users?search=c0bcbb68-60bf-47e7-a948-244ef69ff82c
+
+###
+PUT http://localhost:3001/users/c0bcbb68-60bf-47e7-a948-244ef69ff82c
+Content-Type: application/json
+
+{
+    "name": "Enzo Pilantra",
+    "fancyname": "Pipito",
+    "email": "enzopilantra@gmail.com",
+    "document": "10987654321",
+    "phone": "7799999999",
+    "password": "sache456"
+}
+
+###
+DELETE  http://localhost:3001/users/c0bcbb68-60bf-47e7-a948-244ef69ff82c

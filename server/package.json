@@ -10,7 +10,11 @@
   },
   "author": "",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
-    "fastify": "^4.24.3"
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3",
+    "mysql2": "^3.6.5"
   }
 }

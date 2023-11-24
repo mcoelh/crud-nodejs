@@ -1,6 +1,6 @@
 import { randomUUID} from "node:crypto";
 import  bcrypt  from 'bcrypt';
-import { sql } from "../config/db.connection.js";
+import { sql } from "../config/mysql.connection.js";
 
 export default class UsersQuery {
     

@@ -44,19 +44,17 @@ export default class UsersQuery {
 
         const { login, password } = data;
         const authTypeMap = {
-            'email': 'SELECT email, password FROM users WHERE email = ?',
-            'document': 'SELECT document, password FROM users WHERE document = ?',
-            'phone': 'SELECT phone, name FROM users WHERE phone = ?'
+            'email': 'SELECT email, password, uuid FROM users WHERE email = ?',
+            'document': 'SELECT document, password, uuid FROM users WHERE document = ?',
+            'phone': 'SELECT phone, password, uuid FROM users WHERE phone = ?'
         };
-
         try {
                 const query = authTypeMap[type];
                 const [response] = await sql.query(query, [login]);
-
                 if (response.length > 0){
 
                     if (bcrypt.compareSync(password, response[0].password)){
-                        return ({ success: true, message:'Login realizado com sucesso!' });
+                        return ({ success: true, message:'Login realizado com sucesso!' , user: response[0].uuid});
                     }
                 }
                 return ({ success: false, message:'Usuário não autenticado!' });

@@ -1,4 +1,6 @@
 import UsersQuery from "../models/user.model.js";
+import  Jwt from "jsonwebtoken";
+
 
 const dbUser = new UsersQuery();
 
@@ -47,16 +49,21 @@ export class ControllerUsers{
         return reply.status(204).send();
     }
 
-    async authLogin(request, reply){
+    async authLogin(request, reply, app){
         const {email, document, phone, password} = request.body;
         const type = email ? 'email' : (document ? 'document' : (phone ? 'phone' : undefined));
-
         if (!type)
             return reply.code(400).send({ success: false, message: 'Selecione o tipo de login: e-mail OU CPF OU número de telefone'});
 
         const data = { login: email || document || phone, password };
         const response = await dbUser.authenticate(type, data);
-        
-        return response.success ? reply.send(response) : reply.code(401).send(response);
+        if (response.success)
+        {
+            const user = response.user;
+            const token = Jwt.sign({user}, process.env.SECRET, {expiresIn: '1d'});
+            //console.log(token);
+            reply.code(201).send({response, token});
+        }
+        return reply.code(401).send(response);
     }
 }

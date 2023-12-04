@@ -1,22 +1,25 @@
 POST http://localhost:3001/app/authenticate
 Content-Type: application/json
 
+
 {
     "email": "enzo2@gmail.com",
     "password": "teste123"
 }
 
 
+
 ###
 POST http://localhost:3001/users
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiOTgxOGM4M2ItODUyYi00OTMwLWIzMjYtN2YzM2QxNDZiZDMyIiwiaWF0IjoxNzAxNzI2MDE1LCJleHAiOjE3MDE4MTI0MTV9.u8qKvSttn244oBdbswsShmYEeYEbSMV5urbd1lQMrVA
 
 {
-    "name": "enzo2",
-    "fancyname": "pipo2",
-    "email": "enzo2@gmail.com",
-    "document": "30987654321",
-    "phone": "2799999999",
+    "name": "Teste",
+    "fancyname": "test",
+    "email": "teste@gmail.com",
+    "document": "40987654321",
+    "phone": "8899999999",
     "password": "teste123"
 }
 
@@ -33,13 +36,13 @@ PUT http://localhost:3001/users/e2815187-9140-4863-b122-
 Content-Type: application/json
 
 {
-    "name": "Enzo Pilantra",
-    "fancyname": "Pipito",
-    "email": "enzopilantra@gmail.com",
-    "document": "10987654321",
-    "phone": "7799999999",
-    "password": "sache456"
+    "name": "Teste",
+    "fancyname": "test",
+    "email": "teste@gmail.com",
+    "document": "40987654321",
+    "phone": "8899999999",
+    "password": "teste123"
 }
 
 ###
-DELETE  http://localhost:3001/users/c0bcbb68-60bf-47e7-a948-244ef69ff82c
+DELETE  http://localhost:3001/users/726eb9e6-897f-4086-92f8-09938670462e

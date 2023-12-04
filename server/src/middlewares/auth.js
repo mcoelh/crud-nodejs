@@ -1,11 +1,20 @@
-export async function auth(req, reply){
+import  Jwt from "jsonwebtoken";
+
+export async function auth(req, reply, next){
 
     const apiKey = req.headers.authorization?.replace(/^Bearer /, "");
     const myKey = process.env.SECRET;
 
-    console.log('apikey: ', apiKey, '\n','myKey: ', myKey);
     if (!apiKey)
         return reply.code(401).send({error: 'Não autorizado'});
-    const decodedToken = jwt.verify(apiKey, myKey);
-    console.log(decodedToken);
+    try{
+        const decodedToken = Jwt.verify(apiKey, myKey);
+        if (!decodedToken.user)
+            return reply.code(401).send({message: 'invalid Token!'})
+        req.headers['user'] = decodedToken.user;
+        return next();
+
+    }catch(error){
+        return reply.code(401).send({message: error})
+    }
 }

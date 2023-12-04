@@ -6,7 +6,6 @@ import  pkg from "jsonwebtoken";
 const { Jwt } = pkg;
 const app = fastify();
 app.register(userRoutes);
-git 
 
 
 

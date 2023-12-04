@@ -10,34 +10,59 @@ export default class UsersQuery {
         let user;
         
         if (search) {
-            [user] = await sql.query('SELECT * FROM users WHERE uuid LIKE ?', `%${search}%`);
+            try{
+                [user] = await sql.query('SELECT * FROM users WHERE uuid LIKE ?', `%${search}%`);
+                if (user.length > 0)
+                    return ({success: true, user})
+                else
+                    return ({success: false, message: 'Usuário não localizado'})
+            }catch(error){
+                return ({success: false, message: error});
+            }
         }else{
             try{
                 [user] = await sql.query('select * from users');
-            }catch(err){
-                console.log('Erro: ', err);
+                return ({success: true, user})
+
+            }catch(error){
+                return ({success: false, message: error});
             }
         }
-        return (user);
     }
 
     async create(user){
-        const userId = randomUUID();
-        const { name, fancyname, email, document, phone, password } = user;
-        const hash = bcrypt.hashSync(password, 10);
+        try{
+            const userId = randomUUID();
+            const { name, fancyname, email, document, phone, password } = user;
+            const hash = bcrypt.hashSync(password, 10);
+    
+            await sql.query('INSERT INTO users (uuid, name, fancyname, email, document, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?)', [userId, name, fancyname, email, document, phone, hash ]);
+            return ({success: true, user})
+        }catch (error){
+            return ({success: false, message: error});
+        }
 
-        await sql.query('INSERT INTO users (uuid, name, fancyname, email, document, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?)', [userId, name, fancyname, email, document, phone, hash ]);
     }
 
     async update(id, user){
-        const { name, fancyname, email, document, phone, password } = user;
-        await sql.query('UPDATE users SET name = ?, fancyname = ?, email = ?, document = ?, phone = ?, password = ? WHERE uuid = ?', [name, fancyname, email, document, phone, password, id]);
+        try{
+            const { name, fancyname, email, document, phone, password } = user;
+            await sql.query('UPDATE users SET name = ?, fancyname = ?, email = ?, document = ?, phone = ?, password = ? WHERE uuid = ?', [name, fancyname, email, document, phone, password, id]);
+            return ({success: true, message: 'usuário atualizado'})
+        }catch(error){
+            return ({success: false, message: error})
+        }
 
     }
 
     async delete(id){
-        await sql.query(`DELETE FROM users WHERE uuid = '${id}'`);
-       console.log(resp);
+       try{
+            await sql.query(`DELETE FROM users WHERE uuid = '${id}'`);
+            return ({success: true, message: 'Dados do usuário deletados'});
+       }catch(error){
+            return({success: false, message: error});
+       }
+    
     }
 
     async authenticate(type, data) {
